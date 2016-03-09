@@ -20,8 +20,8 @@ function filterFiles(options, files) {
 }
 
 function instrument(options, files) {
-  var Instrumenter = require(resolve.sync(options.instrumenter.instrumenter, {basedir: __dirname}));
-  var instrumenter = new Instrumenter.Instrumenter(options.instrumenter.instrumenterOptions);
+  var Instrumenter = require(resolve.sync(options.instrumenter, {basedir: __dirname}));
+  var instrumenter = new Instrumenter.Instrumenter(options.instrumenterOptions);
   var captured = false;
 
   return through.obj(function(row, enc, next) {
@@ -52,7 +52,7 @@ function instrument(options, files) {
 var report = [];
 
 function writeReports(options) {
-  var Instrumenter = require(resolve.sync(options.instrumenter.instrumenter, {basedir: __dirname}));
+  var Instrumenter = require(resolve.sync(options.instrumenter, {basedir: __dirname}));
   var collector = new Instrumenter.Collector();
 
   if (options.report) {
@@ -90,9 +90,7 @@ function writeReports(options) {
 
 module.exports = function (b, opts) {
   opts = _.extend({
-    instrumenter: {
-      instrumenter: 'istanbul'
-    },
+    instrumenter: 'istanbul',
   }, opts);
   var reporterOptions = _.omit(opts, 'exclude');
   var files = {};
