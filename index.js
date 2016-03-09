@@ -52,7 +52,7 @@ function instrument(options, files) {
 var report = [];
 
 function writeReports(options) {
-  var Instrumenter = require(resolve.sync(options.instrumenter, {basedir: __dirname}));
+  var Instrumenter = require(resolve.sync(options.instrumenter.instrumenter, {basedir: __dirname}));
   var collector = new Instrumenter.Collector();
 
   if (options.report) {
